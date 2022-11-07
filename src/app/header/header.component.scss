@@ -1,4 +1,4 @@
-nav {
+.header {
   background: var(--primary);
   color: white;
   .logo {
@@ -7,8 +7,8 @@ nav {
   }
 }
 
-ul {
-  li {
+.header--ul {
+  .header--li {
     padding: 1rem 2rem;
     display: inline-block;
     border-radius: 3px;
