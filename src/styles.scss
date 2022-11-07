@@ -19,9 +19,10 @@ a {
 
 :root {
   --font-family: "Roboto", sans-serif;
-  --primary: #363062;
-  --secondary: #4d4c7d;
-  --accent: #e9d5ca;
+  --primary: #98a8f8;
+  --secondary: #bccef8;
+  --tertiary: #cdfcf6;
+  --accent: #faf7f0;
   --lightgray: #ddd;
   --text-regular: #444;
 }
@@ -117,18 +118,22 @@ html {
     padding: 1rem 1.5rem;
     border: 1px solid var(--lightgray);
     border-top: 0;
+
     &:hover {
       background-color: var(--primary);
       color: white;
       cursor: pointer;
     }
+
     transition: all 0.4s;
   }
+
   li:first-child {
     border-top: 1px solid var(--lightgray);
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
   }
+
   li:last-child {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
@@ -142,12 +147,15 @@ html {
   border: none;
   font-weight: 700;
   cursor: pointer;
+
   &-primary {
     background-color: var(--primary);
     color: white;
+
     &:hover {
       background-color: var(--secondary);
     }
+
     transition: background-color 0.4s;
   }
 }
