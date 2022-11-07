@@ -76,6 +76,10 @@ html {
   flex: 1 1 auto;
 }
 
+.flex-50 {
+  flex: 1 1 50%;
+}
+
 // UTILITY
 
 .p-10 {
@@ -84,6 +88,14 @@ html {
 
 .p-20 {
   padding: 2rem;
+}
+
+.pr-10 {
+  padding-right: 1rem;
+}
+
+.pl-10 {
+  padding-left: 1rem;
 }
 
 .m-10 {
