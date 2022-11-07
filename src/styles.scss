@@ -30,3 +30,67 @@ body {
   font-family: var(--font-family);
   color: var(--text-regular);
 }
+
+html {
+  font-size: 62.5%;
+}
+
+// UTILITAIRES
+
+.d-flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-justify-content-center {
+  justify-content: center;
+}
+
+.flex-justify-content-between {
+  justify-content: space-between;
+}
+
+.flex-align-items-center {
+  align-items: center;
+}
+
+.flex-align-items-between {
+  align-content: space-between;
+}
+
+.flex-fill {
+  flex: 1 1 auto;
+}
+
+.p-10 {
+  padding: 1rem;
+}
+
+.p-20 {
+  padding: 2rem;
+}
+
+.m-10 {
+  margin: 1rem;
+}
+
+.m-20 {
+  margin: 2rem;
+}
+
+// DEBUG
+
+.d1 {
+  border: 1px solid red;
+}
+
+.d2 {
+  border: 1px solid green;
+}
