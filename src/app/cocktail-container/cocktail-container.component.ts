@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Cocktail } from '../interfaces/cocktail.interface';
 
 @Component({
-  selector: 'app-cocktail-list',
-  templateUrl: './cocktail-list.component.html',
-  styleUrls: ['./cocktail-list.component.scss'],
+  selector: 'app-cocktail-container',
+  templateUrl: './cocktail-container.component.html',
+  styleUrls: ['./cocktail-container.component.scss'],
 })
-export class CocktailListComponent implements OnInit {
+export class CocktailContainerComponent {
   cocktails: Cocktail[] = [
     {
       name: 'Mojito',
@@ -27,8 +27,11 @@ export class CocktailListComponent implements OnInit {
         'Offrez à vos invités un petit détour par l’Espagne avec une Sangria rouge (il existe également des versions blanches et rose). Pour un pichet de 6 personnes, mélangez 1l de vin rouge, 25cl de limonade, 20cl de jus d’orange, 10cl de Cointreau ainsi que deux oranges et un citron jaune coupés en tranches. Ajoutez une gousse de vanille, 50g de sucre en poudre et ½ cuillère à café de cannelle moulue. Et si pour aller un peu plus loin dans le thème vous proposiez à vos invités quelques tranches de jambon Serrano ?',
     },
   ];
+  public selectedCocktail: Cocktail = this.cocktails[0];
 
   constructor() {}
 
-  ngOnInit(): void {}
+  public selectCocktail(index: number): void {
+    this.selectedCocktail = this.cocktails[index];
+  }
 }
