@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Cocktail } from '../interfaces/cocktail.interface';
+import { Cocktail } from '../shared/interfaces/cocktail.interface';
+import { CocktailService } from '../shared/services/cocktail.service';
 
 @Component({
   selector: 'app-cocktail-container',
@@ -7,35 +8,12 @@ import { Cocktail } from '../interfaces/cocktail.interface';
   styleUrls: ['./cocktail-container.component.scss'],
 })
 export class CocktailContainerComponent {
-  cocktails: Cocktail[] = [
-    {
-      name: 'Mojito',
-      img: 'https://lacocotte.net/wp-content/uploads/2021/03/Mojito.jpg',
-      description:
-        'Ce classique cubain peut sembler dépassé à côté de la mode actuelle des cocktails – comme s’il était un héritage des années 2000 – et pourtant il reste un véritable classique, très apprécié des connaisseurs. La fraîcheur de la menthe et de l’eau, l’éclat du rhum, du citron vert et de la cassonade avec de la glace en font toujours une boisson désaltérantes',
-    },
-    {
-      name: 'Bellini',
-      img: 'https://maisonfoody.com/sites/default/files/styles/article_paragraph_image/public/2019-11/bellini_1.jpg?itok=IGogglim',
-      description:
-        'Venu tout droit de Norvège l’Aquavit est l’alcool le plus trendy du moment. On l’aime tout particulièrement sous forme de cocktail « Fresh » et pour le réaliser, voici la marche à suivre : mélangez 4cl d’Aquavit, 1cl de Grand Marnier, du jus d’orange et quelques feuilles de menthe. Servez-le accompagné de petits canapés de saumon de Norvège et baies roses et vous voilà avec un combo d’apéro parfait !',
-    },
-    {
-      name: 'Sangria',
-      img: 'https://maisonfoody.com/sites/default/files/styles/article_paragraph_image/public/2019-11/sangria.jpg?itok=LjVLCYpj',
-      description:
-        'Offrez à vos invités un petit détour par l’Espagne avec une Sangria rouge (il existe également des versions blanches et rose). Pour un pichet de 6 personnes, mélangez 1l de vin rouge, 25cl de limonade, 20cl de jus d’orange, 10cl de Cointreau ainsi que deux oranges et un citron jaune coupés en tranches. Ajoutez une gousse de vanille, 50g de sucre en poudre et ½ cuillère à café de cannelle moulue. Et si pour aller un peu plus loin dans le thème vous proposiez à vos invités quelques tranches de jambon Serrano ?',
-    },
-  ];
-  public selectedCocktail: Cocktail;
+  cocktails: Cocktail[] = [];
+  public selectedCocktail: Cocktail = this.cocktails[0];
 
-  constructor() {}
+  constructor(private cocktailService: CocktailService) {}
 
   public selectCocktail(index: number): void {
     this.selectedCocktail = this.cocktails[index];
-  }
-
-  ngOnInit() {
-    this.selectedCocktail = this.cocktails[0];
   }
 }
