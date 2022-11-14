@@ -3,6 +3,7 @@
   <li
     (click)="selectCocktail(index)"
     *ngFor="let cocktail of cocktails; let index = index"
+    [appSelected]="cocktail.name === selectedCocktail.name"
   >{{ cocktail.name }}</li>
 </ul>
 <button class="btn btn-primary">Ajouter un cocktail</button>
