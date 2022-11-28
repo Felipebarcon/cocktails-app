@@ -177,6 +177,11 @@ html {
   font-weight: 500;
 }
 
+.active {
+  background-color: var(--accent);
+  color: #444444;
+}
+
 // DEBUG
 
 .d1 {
