@@ -7,7 +7,7 @@ import { Ingredient } from '../../shared/interfaces/ingredient.interface';
   styleUrls: ['./ingredient-list.component.scss'],
 })
 export class IngredientListComponent implements OnInit {
-  @Input() public ingredients: Ingredient[];
+  @Input() public ingredients: Ingredient[] | null = null;
 
   constructor() {}
 

@@ -15,6 +15,6 @@ export class CocktailDetailsComponent implements OnInit {
   ngOnInit(): void {}
 
   public addToPanier(): void {
-    this.panierService.addToPanier(this.cocktail.ingredients);
+    this.panierService.addPanier(this.cocktail.ingredients);
   }
 }
