@@ -1,6 +1,7 @@
 .header {
   background: var(--primary);
   color: white;
+
   .logo {
     font-size: 1.8rem;
     font-weight: 700;
@@ -12,9 +13,13 @@
     padding: 1rem 2rem;
     display: inline-block;
     border-radius: 3px;
+    margin-right: 1rem;
+    cursor: pointer;
+
     &:hover {
       background-color: var(--secondary);
     }
+
     transition: background-color 0.4s;
   }
 }
