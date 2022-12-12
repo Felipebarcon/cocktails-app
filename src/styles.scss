@@ -178,8 +178,9 @@ html {
 }
 
 .active {
-  background-color: var(--accent);
-  color: #444444;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
 }
 
 // DEBUG
