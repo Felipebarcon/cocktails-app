@@ -17,6 +17,17 @@ a {
   color: inherit;
 }
 
+input {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 0.8rem 1.5rem;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 :root {
   --font-family: "Roboto", sans-serif;
   --primary: #98a8f8;
@@ -155,6 +166,10 @@ html {
   border: none;
   font-weight: 700;
   cursor: pointer;
+
+  &-secondary {
+    background-color: #ddd;
+  }
 
   &-primary {
     background-color: var(--primary);
