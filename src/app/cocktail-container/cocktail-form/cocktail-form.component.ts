@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CocktailService } from '../../shared/services/cocktail.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cocktail-form',
@@ -11,13 +13,33 @@ export class CocktailFormComponent implements OnInit {
     name: ['', Validators.required],
     img: ['', Validators.required],
     description: ['', Validators.required],
+    ingredients: this.fb.array([], Validators.required),
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private cocktailService: CocktailService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
+  public get ingredients() {
+    return this.cocktailForm.get('ingredients') as FormArray;
+  }
+
+  public addIngredient(): void {
+    this.ingredients.push(
+      this.fb.group({
+        name: ['', Validators.required],
+        quantity: [0, Validators.required],
+      })
+    );
+  }
 
   ngOnInit(): void {}
 
   public submit(): void {
-    console.log(this.cocktailForm);
+    this.cocktailService.addCocktail(this.cocktailForm.value);
+    this.router.navigate(['..'], { relativeTo: this.activatedRoute });
   }
 }

@@ -23,6 +23,11 @@ input {
   padding: 0.8rem 1.5rem;
 }
 
+hr {
+  margin: 2rem 0;
+  border-top: 1px solid #ddd;
+}
+
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -167,10 +172,6 @@ html {
   font-weight: 700;
   cursor: pointer;
 
-  &-secondary {
-    background-color: #ddd;
-  }
-
   &-primary {
     background-color: var(--primary);
     color: white;
@@ -180,6 +181,10 @@ html {
     }
 
     transition: background-color 0.4s;
+  }
+
+  &-secondary {
+    background-color: #ddd;
   }
 }
 
