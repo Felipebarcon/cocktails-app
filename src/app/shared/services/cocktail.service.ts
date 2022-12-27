@@ -1,75 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Cocktail } from '../interfaces/cocktail.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CocktailService {
-  public cocktails$: BehaviorSubject<Cocktail[]> = new BehaviorSubject([
-    {
-      name: 'Mojito',
-      img: 'https://lacocotte.net/wp-content/uploads/2021/03/Mojito.jpg',
-      description:
-        'Ce classique cubain peut sembler dépassé à côté de la mode actuelle des cocktails – comme s’il était un héritage des années 2000 – et pourtant il reste un véritable classique, très apprécié des connaisseurs. La fraîcheur de la menthe et de l’eau, l’éclat du rhum, du citron vert et de la cassonade avec de la glace en font toujours une boisson désaltérantes',
-      ingredients: [
-        {
-          name: 'Perrier',
-          quantity: 1,
-        },
-        {
-          name: 'Menthe',
-          quantity: 2,
-        },
-        {
-          name: 'Rhum',
-          quantity: 3,
-        },
-      ],
-    },
-    {
-      name: 'Bellini',
-      img: 'https://maisonfoody.com/sites/default/files/styles/article_paragraph_image/public/2019-11/bellini_1.jpg?itok=IGogglim',
-      description:
-        'Venu tout droit de Norvège l’Aquavit est l’alcool le plus trendy du moment. On l’aime tout particulièrement sous forme de cocktail « Fresh » et pour le réaliser, voici la marche à suivre : mélangez 4cl d’Aquavit, 1cl de Grand Marnier, du jus d’orange et quelques feuilles de menthe. Servez-le accompagné de petits canapés de saumon de Norvège et baies roses et vous voilà avec un combo d’apéro parfait !',
-      ingredients: [
-        {
-          name: 'Purée de pèches',
-          quantity: 3,
-        },
-        {
-          name: 'Prosecco',
-          quantity: 10,
-        },
-      ],
-    },
-    {
-      name: 'Sangria',
-      img: 'https://maisonfoody.com/sites/default/files/styles/article_paragraph_image/public/2019-11/sangria.jpg?itok=LjVLCYpj',
-      description:
-        'Offrez à vos invités un petit détour par l’Espagne avec une Sangria rouge (il existe également des versions blanches et rose). Pour un pichet de 6 personnes, mélangez 1l de vin rouge, 25cl de limonade, 20cl de jus d’orange, 10cl de Cointreau ainsi que deux oranges et un citron jaune coupés en tranches. Ajoutez une gousse de vanille, 50g de sucre en poudre et ½ cuillère à café de cannelle moulue. Et si pour aller un peu plus loin dans le thème vous proposiez à vos invités quelques tranches de jambon Serrano ?',
-      ingredients: [
-        {
-          name: 'Vin rouge',
-          quantity: 1,
-        },
-        {
-          name: 'Limonade',
-          quantity: 0.25,
-        },
-        {
-          name: 'Oranges',
-          quantity: 2,
-        },
-        {
-          name: 'Sucre',
-          quantity: 50,
-        },
-      ],
-    },
-  ]);
+  public cocktails$: BehaviorSubject<Cocktail[] | []> = new BehaviorSubject<
+    Cocktail[] | []
+  >([]);
 
-  constructor() {}
+  constructor(private http: HttpClient) {
+    // this.seed();
+  }
 
   public getCocktail(index: number) {
     return this.cocktails$.value[index];
@@ -91,5 +35,61 @@ export class CocktailService {
         }
       })
     );
+  }
+
+  public fetchCocktails(): Observable<Cocktail[]> {
+    return this.http
+      .get<Cocktail[] | []>('https://restapi.fr/api/cocktails')
+      .pipe(
+        tap((cocktails: Cocktail[]) => {
+          this.cocktails$.next(cocktails);
+        })
+      );
+  }
+
+  public seed() {
+    this.http
+      .get<Cocktail[] | []>('https://restapi.fr/api/cocktails')
+      .subscribe((cocktails: Cocktail[] | []) => {
+        if (!cocktails.length) {
+          this.http
+            .post('https://restapi.fr/api/cocktails', [
+              {
+                name: 'Mojito',
+                img: 'https://static.750g.com/images/1200-630/b520523117d647dab6b842a36f4cc7f5/mojito-le-vrai.jpg',
+                description:
+                  'The Mojito complimenting summer perfectly with a fresh minty taste. The mixture of white rum, mint, lime juice, sugar and soda water is crisp and clean with a relatively low alcohol content, the soda water can be replaced with sprite or 7-up. When preparing a mojito always crush the mint leaves as opposed to dicing to unlock oils that will assist with enhancing the minty flavour.',
+                ingredients: [
+                  { name: 'Perrier', quantity: 1 },
+                  { name: 'Rhum', quantity: 1 },
+                  { name: 'Menthe', quantity: 1 },
+                ],
+              },
+              {
+                name: 'Cosmopolitan',
+                img: 'https://assets.afcdn.com/recipe/20180705/80274_w1024h1024c1cx2378cy1278.webp',
+                description:
+                  'The tangy concoction of vodka, triple sec, lime juice and cranberry juice has managed to leapfrog the venerable screwdriver as many vodka drinkers prefer the Cosmopolitan’s cleaner and slightly tart taste. The keys to the preparation of a Cosmopolitan are a good brand of cranberry juice and Cointreau Triple Sec, two essential elements to the drink.',
+                ingredients: [
+                  { name: 'Cranberry', quantity: 1 },
+                  { name: 'Citron', quantity: 1 },
+                  { name: 'Vodka', quantity: 1 },
+                ],
+              },
+              {
+                name: 'Mai Tai',
+                img: 'https://www.cocktail.fr/wp-content/uploads/2017/05/mai-tai.jpg',
+                description:
+                  'The Mai Tai is a Polynesian-style cocktail that has a fruity tropical taste sweet and vibrant. The mixture of light and dark rum, orange curacao, orgeat syrup and lime juice has been a symbol of Tahitian culture ever since the drink was first created.',
+                ingredients: [
+                  { name: 'Rhum', quantity: 1 },
+                  { name: 'Triple sec', quantity: 1 },
+                  { name: 'Citron', quantity: 1 },
+                ],
+              },
+            ])
+            .subscribe();
+        }
+      });
   }
 }
