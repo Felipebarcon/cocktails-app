@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./cocktail-container.component.scss'],
 })
 export class CocktailContainerComponent {
-  cocktails$: Observable<Cocktail[]> = this.cocktailService.cocktails$;
+  cocktails$: Observable<Cocktail[] | []> = this.cocktailService.cocktails$;
 
   constructor(private cocktailService: CocktailService) {}
 }

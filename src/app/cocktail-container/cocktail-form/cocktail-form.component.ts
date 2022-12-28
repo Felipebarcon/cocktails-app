@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CocktailService } from '../../shared/services/cocktail.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Cocktail } from '../../shared/interfaces/cocktail.interface';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-cocktail-form',
@@ -11,7 +12,7 @@ import { Cocktail } from '../../shared/interfaces/cocktail.interface';
 })
 export class CocktailFormComponent implements OnInit {
   public cocktail?: Cocktail;
-  public cocktailForm: FormGroup = this.initForm();
+  public cocktailForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -24,12 +25,19 @@ export class CocktailFormComponent implements OnInit {
     return this.cocktailForm.get('ingredients') as FormArray;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');
       if (index !== null) {
-        this.cocktail = this.cocktailService.getCocktail(+index);
-        this.cocktailForm = this.initForm(this.cocktail);
+        this.cocktailService
+          .getCocktail(+index)
+          .pipe(first((x) => !!x))
+          .subscribe((cocktail: Cocktail) => {
+            this.cocktail = cocktail;
+            this.cocktailForm = this.initForm(this.cocktail);
+          });
+      } else {
+        this.cocktailForm = this.initForm();
       }
     });
   }
@@ -44,10 +52,12 @@ export class CocktailFormComponent implements OnInit {
   }
 
   public submit(): void {
-    if (this.cocktail) {
-      this.cocktailService.editCocktail(this.cocktailForm.value);
+    if (this.cocktail?._id) {
+      this.cocktailService
+        .editCocktail(this.cocktail._id, this.cocktailForm.value)
+        .subscribe();
     } else {
-      this.cocktailService.addCocktail(this.cocktailForm.value);
+      this.cocktailService.addCocktail(this.cocktailForm.value).subscribe();
     }
     this.router.navigate(['..'], { relativeTo: this.activatedRoute });
   }
